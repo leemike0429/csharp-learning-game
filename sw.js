@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'csharp-game-v2';
+const CACHE_VERSION = 'csharp-game-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
