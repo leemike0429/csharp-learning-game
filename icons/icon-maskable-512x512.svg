@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#6c5ce7"/>
+  <text x="50%" y="42%" font-family="Arial, sans-serif" font-size="100" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">C#</text>
+  <text x="50%" y="65%" font-family="Arial, sans-serif" font-size="45" fill="rgba(255,255,255,0.8)" text-anchor="middle" dominant-baseline="middle">學習遊戲</text>
+</svg>
