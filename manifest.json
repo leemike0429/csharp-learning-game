@@ -2,7 +2,7 @@
   "name": "C# 學習遊戲",
   "short_name": "C# 學習",
   "description": "用遊戲化方式學習 C# 程式語言",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1a1a2e",
