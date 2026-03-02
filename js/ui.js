@@ -23,19 +23,19 @@ App.UI = (function() {
   ];
 
   function highlightCSharp(code) {
-    let html = escapeHtml(code);
-    // Strings
-    html = html.replace(/(&quot;[^&]*?&quot;|"[^"]*?")/g, '<span class="hl-string">$1</span>');
-    // Comments
-    html = html.replace(/(\/\/.*)/g, '<span class="hl-comment">$1</span>');
-    // Blanks
-    html = html.replace(/_____/g, '<span class="hl-blank">_____</span>');
-    html = html.replace(/___/g, '<span class="hl-blank">___</span>');
-    // Keywords
-    const kwPattern = new RegExp('\\b(' + CS_KEYWORDS.join('|') + ')\\b', 'g');
-    html = html.replace(kwPattern, '<span class="hl-keyword">$1</span>');
-    // Numbers
-    html = html.replace(/\b(\d+\.?\d*[fFdDmM]?)\b/g, '<span class="hl-number">$1</span>');
+    var html = escapeHtml(code);
+    var kwSet = {};
+    CS_KEYWORDS.forEach(function(kw) { kwSet[kw] = true; });
+    // Single-pass regex to avoid inserting <span> tags that later regexes corrupt
+    var pattern = /(&quot;(?:[^&]|&(?!quot;))*?&quot;)|(\/\/[^\n]*)|(_{3,})|(\b[a-zA-Z_]\w*\b)|(\b\d+\.?\d*[fFdDmM]?\b)/g;
+    html = html.replace(pattern, function(match, str, comment, blank, word, num) {
+      if (str) return '<span class="hl-string">' + str + '</span>';
+      if (comment) return '<span class="hl-comment">' + comment + '</span>';
+      if (blank) return '<span class="hl-blank">' + match + '</span>';
+      if (word) return kwSet[word] ? '<span class="hl-keyword">' + word + '</span>' : match;
+      if (num) return '<span class="hl-number">' + num + '</span>';
+      return match;
+    });
     return html;
   }
 

@@ -3,6 +3,16 @@ App.Pages = App.Pages || {};
 
 App.Pages.Matching = (function() {
   let state = {};
+  var PAIR_COLORS = [
+    { border: '#00b894', bg: 'rgba(0,184,148,0.18)' },
+    { border: '#6c5ce7', bg: 'rgba(108,92,231,0.18)' },
+    { border: '#e17055', bg: 'rgba(225,112,85,0.18)' },
+    { border: '#fdcb6e', bg: 'rgba(253,203,110,0.18)' },
+    { border: '#0984e3', bg: 'rgba(9,132,227,0.18)' },
+    { border: '#e84393', bg: 'rgba(232,67,147,0.18)' },
+    { border: '#00cec9', bg: 'rgba(0,206,201,0.18)' },
+    { border: '#fd79a8', bg: 'rgba(253,121,168,0.18)' }
+  ];
 
   function initState(topicId, levelId) {
     const questions = App.Questions.getShuffledQuestions(topicId, levelId);
@@ -129,8 +139,21 @@ App.Pages.Matching = (function() {
     });
 
     if (isCorrect) {
-      if (leftCard) { leftCard.classList.remove('selected'); leftCard.classList.add('matched'); }
-      if (rightCard) { rightCard.classList.remove('selected'); rightCard.classList.add('matched'); }
+      var color = PAIR_COLORS[state.matched % PAIR_COLORS.length];
+      if (leftCard) {
+        leftCard.classList.remove('selected');
+        leftCard.classList.add('matched');
+        leftCard.style.borderColor = color.border;
+        leftCard.style.background = color.bg;
+        leftCard.style.opacity = '1';
+      }
+      if (rightCard) {
+        rightCard.classList.remove('selected');
+        rightCard.classList.add('matched');
+        rightCard.style.borderColor = color.border;
+        rightCard.style.background = color.bg;
+        rightCard.style.opacity = '1';
+      }
       state.matched++;
       state.matchedPairs[state.selectedLeft] = true;
       App.UI.vibrate(50);
