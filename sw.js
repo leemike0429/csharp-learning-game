@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'csharp-game-v3';
+const CACHE_VERSION = 'csharp-game-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -52,4 +52,11 @@ self.addEventListener('fetch', event => {
     caches.match(event.request)
       .then(cached => cached || fetch(event.request))
   );
+});
+
+// Listen for skip waiting message from app
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
