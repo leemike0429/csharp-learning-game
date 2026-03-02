@@ -3,6 +3,43 @@ var App = window.App || {};
 App.Pages = App.Pages || {};
 
 App.Pages.Home = (function() {
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+
+  function getInstallBanner() {
+    if (isStandalone()) return '';
+    var dismissed = sessionStorage.getItem('install-dismissed');
+    if (dismissed) return '';
+
+    var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+    var isAndroid = /Android/.test(navigator.userAgent);
+    if (!isIOS && !isAndroid) return '';
+
+    return '<div class="card mb-md" style="border:2px solid var(--primary);position:relative" id="install-banner">' +
+      '<button onclick="document.getElementById(\'install-banner\').remove();sessionStorage.setItem(\'install-dismissed\',\'1\')" ' +
+        'style="position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px">&times;</button>' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<span style="font-size:1.8rem">\u{1F4F2}</span>' +
+        '<div style="font-weight:700;font-size:1.05rem">安裝到手機桌面</div>' +
+      '</div>' +
+      '<div style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">' +
+        (isIOS ?
+          '<div style="margin-bottom:4px">iPhone / iPad（Safari）：</div>' +
+          '<div>1. 點底部 <strong style="color:var(--text)">分享按鈕</strong>（\u2B06 方框加箭頭）</div>' +
+          '<div>2. 選 <strong style="color:var(--text)">「加入主畫面」</strong></div>' +
+          '<div>3. 按右上角 <strong style="color:var(--text)">「新增」</strong></div>'
+        :
+          '<div style="margin-bottom:4px">Android（Chrome）：</div>' +
+          '<div>1. 點右上角 <strong style="color:var(--text)">\u22EE 選單</strong></div>' +
+          '<div>2. 選 <strong style="color:var(--text)">「加到主畫面」</strong></div>' +
+          '<div>3. 點 <strong style="color:var(--text)">「安裝」</strong></div>'
+        ) +
+        '<div style="margin-top:6px;color:var(--accent);font-size:0.8rem">安裝後可像 App 一樣全螢幕開啟！</div>' +
+      '</div>' +
+    '</div>';
+  }
+
   function render(container) {
     const stats = App.Store.getStats();
     const settings = App.Store.getSettings();
@@ -52,6 +89,8 @@ App.Pages.Home = (function() {
     container.innerHTML =
       App.UI.renderHeader('C# 學習遊戲', false, '<button class="header-btn" onclick=\'App.Router.navigate("profile")\'>&#9881;&#65039;</button>') +
       '<div class="page animate-page-enter"><div class="page-content">' +
+        // Install Guide
+        getInstallBanner() +
         // Player Info Card
         '<div class="card mb-md">' +
           '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">' +
