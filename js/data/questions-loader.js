@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 
 App.Questions = (function() {
   function getAllTopics() {

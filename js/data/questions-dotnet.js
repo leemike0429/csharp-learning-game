@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 App.QuestionsDotnet = {
   topic: 'dotnet',
   topicName: '.NET 8 技術',

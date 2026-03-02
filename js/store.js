@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 
 App.Store = (function() {
   const STORAGE_KEY = 'csharp-game-state';

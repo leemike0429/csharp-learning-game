@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 App.Pages = App.Pages || {};
 
 App.Pages.LevelSelect = (function() {

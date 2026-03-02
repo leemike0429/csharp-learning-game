@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 
 App.Router = (function() {
   const routes = {};

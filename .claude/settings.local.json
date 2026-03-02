@@ -10,7 +10,11 @@
       "Bash(npx:*)",
       "Bash(brew install:*)",
       "Bash(gh repo:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(gh run:*)",
+      "WebFetch(domain:leemike0429.github.io)",
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ]
   }
 }

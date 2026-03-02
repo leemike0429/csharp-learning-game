@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 App.QuestionsOOP = {
   topic: 'oop',
   topicName: '物件導向',

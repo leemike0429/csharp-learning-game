@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 App.QuestionsAdvanced = {
   topic: 'advanced',
   topicName: '進階主題',

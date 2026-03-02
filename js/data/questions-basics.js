@@ -1,4 +1,4 @@
-const App = window.App || {};
+var App = window.App || {};
 App.QuestionsBasics = {
   topic: 'basics',
   topicName: '基礎語法',
