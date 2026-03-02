@@ -206,15 +206,8 @@ App.Store = (function() {
     return prevProgress && prevProgress.completed;
   }
 
-  function isTopicUnlocked(topic, allTopics) {
-    const topicIndex = allTopics.indexOf(topic);
-    if (topicIndex <= 0) return true;
-    const prevTopic = allTopics[topicIndex - 1];
-    const prevProgress = getTopicProgress('quiz', prevTopic);
-    const totalLevels = App.Questions ? App.Questions.getLevels(prevTopic).length : 0;
-    if (totalLevels === 0) return true;
-    const completedCount = Object.values(prevProgress).filter(p => p.completed).length;
-    return completedCount >= Math.ceil(totalLevels * 0.6);
+  function isTopicUnlocked() {
+    return true;
   }
 
   function unlockAchievement(id) {

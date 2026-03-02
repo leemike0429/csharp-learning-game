@@ -82,8 +82,9 @@ App.Pages.Matching = (function() {
 
       '<div class="page" style="padding-bottom:16px"><div class="page-content">' +
         '<div style="font-size:0.95rem;margin-bottom:12px;color:var(--text-dim)">' + App.UI.escapeHtml(q.question) + '</div>' +
-        '<div class="match-container" id="match-area">' +
+        '<div class="match-container" id="match-area" style="position:relative">' +
           '<div class="match-column" id="left-col">' + leftHtml + '</div>' +
+          '<svg id="match-lines" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1"></svg>' +
           '<div class="match-column" id="right-col">' + rightHtml + '</div>' +
         '</div>' +
         '<div id="match-feedback" style="margin-top:16px"></div>' +
@@ -113,6 +114,29 @@ App.Pages.Matching = (function() {
         }
       });
     }
+  }
+
+  function drawLine(leftCard, rightCard, color) {
+    var svg = document.getElementById('match-lines');
+    if (!svg || !leftCard || !rightCard) return;
+    var container = document.getElementById('match-area');
+    var containerRect = container.getBoundingClientRect();
+    var leftRect = leftCard.getBoundingClientRect();
+    var rightRect = rightCard.getBoundingClientRect();
+    var x1 = leftRect.right - containerRect.left;
+    var y1 = leftRect.top + leftRect.height / 2 - containerRect.top;
+    var x2 = rightRect.left - containerRect.left;
+    var y2 = rightRect.top + rightRect.height / 2 - containerRect.top;
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '2.5');
+    line.setAttribute('stroke-linecap', 'round');
+    line.setAttribute('opacity', '0.7');
+    svg.appendChild(line);
   }
 
   function clearSelection(side) {
@@ -145,15 +169,14 @@ App.Pages.Matching = (function() {
         leftCard.classList.add('matched');
         leftCard.style.borderColor = color.border;
         leftCard.style.background = color.bg;
-        leftCard.style.opacity = '1';
       }
       if (rightCard) {
         rightCard.classList.remove('selected');
         rightCard.classList.add('matched');
         rightCard.style.borderColor = color.border;
         rightCard.style.background = color.bg;
-        rightCard.style.opacity = '1';
       }
+      drawLine(leftCard, rightCard, color.border);
       state.matched++;
       state.matchedPairs[state.selectedLeft] = true;
       App.UI.vibrate(50);
